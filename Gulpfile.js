@@ -4,6 +4,9 @@ var jshint = require('gulp-jshint');
 var mocha = require('gulp-mocha');
 var nodemon = require('gulp-nodemon');
 var stylish = require('jshint-stylish');
+var del = require('del');
+var webpack = require('webpack');
+var gutil = require('gulp-util');
 
 var serverFiles = ['lib/**/*.js', 'routes/**/*.js', 'models/**/*.js', 'test/server/**/*.js', './*.js'];
 var clientFiles = ['app/**/*.js'];
@@ -60,6 +63,40 @@ gulp.task('test:srv', function(){
 gulp.task('watch', function(){
 	gulp.watch(serverFiles, ['lint']);
 });
+
+gulp.task('copy', function(){
+	gulp.src('app/**/*.html').pipe(gulp.dest('build/'));
+});
+
+gulp.task('clean', function(done){
+	del(['build/**/*'], function(err, paths){
+		if (err) throw new gutil.PluginError('clean', err);								
+		gutil.log('--[clean]--', 'Deleted files/folders:\n\t' + paths.join('\n\t'));
+		done();
+	});
+});
+
+gulp.task('webpack', function(done){
+	var options = {
+		entry: __dirname + '/app/js/client.js',
+		output: {
+			path: 'build/',
+			file: 'bundle.js'
+		},
+		stats: {
+			colors: true
+		},
+		failsOnError: false,
+		keepalive: true
+	};
+	webpack(options, function(err, stats){
+		if (err) throw new gutil.PluginError('webpack', err);
+		gutil.log('--[webpack]--', stats.toString());
+		done();
+	});
+});
+
+gulp.task('build', ['webpack', 'copy']);
 
 gulp.task('lint', ['lint:srv', 'lint:app']);
 gulp.task('test', ['test:srv']);

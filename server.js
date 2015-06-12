@@ -8,6 +8,8 @@ var app = express();
 var port = process.env.PORT || 3000;
 
 // setup routes
+app.use(express.static(__dirname + '/build'));
+
 var fourOhfourRouter = express.Router();
 require('./routes/404.js')(fourOhfourRouter);
 app.use('*', fourOhfourRouter);
