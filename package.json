@@ -1,0 +1,26 @@
+{
+  "name": "anguler_example",
+  "version": "1.0.0",
+  "description": "Single Resource Anuglar App ==========================",
+  "main": "server.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dwolfm/simple-ang"
+  },
+  "author": "dwolfm@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dwolfm/simple-ang/issues"
+  },
+  "homepage": "https://github.com/dwolfm/simple-ang",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-jshint": "^1.11.0",
+    "gulp-mocha": "^2.1.1",
+    "gulp-nodemon": "^2.0.3",
+    "jshint-stylish": "^2.0.0"
+  }
+}
